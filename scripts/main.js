@@ -7,9 +7,10 @@ const main = () => {
   const clearButton = document.querySelector('#clear')
   const deleteButton = document.querySelector('#del')
   const equalButton = document.querySelector('#equal')
+  const squareRootButton = document.querySelector('#square-root')
 
   // Arrays
-  const operationArray = []
+  let operationArray = []
 
   // Stored variables
   let operator = ""
@@ -60,10 +61,18 @@ const main = () => {
     }
   }
 
-  const clearEvent = (e) => {
+  const squareRootEvent = (e) => {
     e.preventDefault()
-    operationArray.length = 0
-    display.innerText = "0"
+    if(operator === ""){
+      const number = Number(operationArray.join(''))
+      const result = Math.sqrt(number) 
+      display.innerText = result
+      operationArray.length = 0
+      operationArray = operationArray.concat(Array.from(String(result)))
+      if(operationArray.length >= 16){
+        operationArray.slice(16)
+      }
+    }
   }
 
   const equalEvent = (e) => {
@@ -87,7 +96,22 @@ const main = () => {
       display.innerText = Number(leftNumbers) + Number(rightNumbers);
     }
     operationArray.length = 0
-    operationArray.push(display.innerText)
+    operationArray.concat(Array.from(display.innerText))
+  }
+
+  const clearEvent = (e) => {
+    e.preventDefault()
+    operationArray.length = 0
+    display.innerText = "0"
+  }
+
+  const deleteEvent = (e) => {
+    e.preventDefault()
+    operationArray.pop()
+    updateDisplay()
+    if(operationArray.length <= 0){
+      display.innerText = "0"
+    }
   }
 
   const updateDisplay = () => {
@@ -116,6 +140,14 @@ const main = () => {
 
   equalButton.addEventListener('click', (e) => {
     equalEvent(e)
+  })
+
+  deleteButton.addEventListener('click', (e) => {
+    deleteEvent(e)
+  })
+
+  squareRootButton.addEventListener('click', (e) => {
+    squareRootEvent(e)
   })
 }
 

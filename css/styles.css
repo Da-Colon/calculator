@@ -78,6 +78,11 @@ html {
   font-size: 1.5rem;
 }
 
+.special {
+  background-color: rgb(9, 111, 206);
+  font-size: 1.5rem;
+}
+
 .equal {
   background: rgb(190, 129, 15)
 }
