@@ -1,0 +1,76 @@
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+.calculator{
+  background: linear-gradient(to bottom, #d8e0de 0%,#aebfbc 22%,#99afab 33%,#8ea6a2 50%,#829d98 67%,#4e5c5a 82%,#0e0e0e 100%);
+  width: 31%;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 20px 40px 5px 25px;
+  box-shadow: 0.2rem 0.2rem 0.5rem rgb(73, 72, 72), 0.3rem 0.5rem 0.5rem rgb(99, 97, 97), 0.4rem 0.7rem 0.5rem rgb(117, 116, 116);
+  border-bottom: 16px solid silver;
+  border-right: 16px solid silver;
+}
+
+.display{
+  background: linear-gradient(to bottom, #627d4d 0%,#1f3b08 100%);
+  color: #cccccc;
+  width: 100%;
+  height: 5rem;
+  padding: 1rem;
+  font-size: 2.6rem;
+  text-align: right;
+  border-radius: 6px;
+  box-shadow: 0.5rem 0rem 5rem rgb(243, 240, 240);
+}
+
+.button-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(to bottom, #45484d 0%,#000000 100%);
+  padding: 0.2rem;
+  margin: 4px auto;
+  border-radius: 20px;
+}
+
+.row{
+  display: flex;
+  width: 100%;
+}
+
+
+.button{
+  padding: 1.6rem;
+  margin: 0.2rem;
+  font-size: 1.2rem;
+  width: 100%;
+  border-radius: 6px 15px 15px 15px;
+  border-bottom: 8px solid silver;
+  border-right: 8px solid silver;
+}
+
+.number{
+  background-color: ivory;
+}
+
+.operator{
+  background-color: rgb(9, 111, 206);
+  font-size: 1.5rem;
+}
+
+.equal {
+  background: rgb(190, 129, 15)
+}
+
+.clear {
+  background-color: rgb(3, 80, 13);
+  color: #cccccc;
+}
