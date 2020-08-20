@@ -23,10 +23,16 @@ html {
   width: 100%;
   height: 5rem;
   padding: 1rem;
+  padding-right: 2.1rem;
   font-size: 2.6rem;
   text-align: right;
   border-radius: 6px;
   box-shadow: 0.5rem 0rem 5rem rgb(243, 240, 240);
+  overflow-x: scroll;
+}
+
+.display::-webkit-scrollbar {
+  display: none;
 }
 
 .button-container{
@@ -48,13 +54,19 @@ html {
 
 
 .button{
-  padding: 1.6rem;
+  padding: 1.3rem;
   margin: 0.2rem;
   font-size: 1.2rem;
   width: 100%;
-  border-radius: 6px 15px 15px 15px;
+  border-radius: 10px 15px 15px 15px;
   border-bottom: 8px solid silver;
   border-right: 8px solid silver;
+  outline: none;
+}
+
+.button:active {
+  box-shadow: inset 0px 0px 10px #c1c1c1;
+  transform: scale(0.9)
 }
 
 .number{
