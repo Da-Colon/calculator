@@ -11,9 +11,7 @@ const main = () => {
 
   // Arrays
   let operationArray = []
-
-  // Stored variables
-  let operator = ""
+  let operators = []
 
   // Functions
   const numberEvent = (e) => {
@@ -30,32 +28,7 @@ const main = () => {
     if(operationArray.length >= 1 && operationArray.length <= 15 ){
       const targetValue = e.target.value
       let index = 0
-      operator = targetValue
-      
-      if(operationArray.includes("x")){
-        index = operationArray.indexOf('x')
-        operationArray[index] = targetValue
-        updateDisplay();
-        return;
-      } 
-      if (operationArray.includes("-")){
-        index = operationArray.indexOf('-')
-        operationArray[index] = targetValue
-        updateDisplay();
-        return; 
-      } 
-      if(operationArray.includes("+")){
-        index = operationArray.indexOf('+')
-        operationArray[index] = targetValue
-        updateDisplay();
-        return;
-      }  
-      if(operationArray.includes("÷")){
-        index = operationArray.indexOf('÷')
-        operationArray[index] = targetValue
-        updateDisplay();
-        return;
-      } 
+      operators.push(targetValue)
       operationArray.push(targetValue)
       updateDisplay();
     }
@@ -63,45 +36,61 @@ const main = () => {
 
   const squareRootEvent = (e) => {
     e.preventDefault()
-    if(operator === ""){
+    equalEvent(e)
+    if(operators.length === 0){
       const number = Number(operationArray.join(''))
       const result = Math.sqrt(number) 
       display.innerText = result
       operationArray.length = 0
       operationArray = operationArray.concat(Array.from(String(result)))
       if(operationArray.length >= 16){
-        operationArray.slice(16)
+        operationArray.length = 15
+        updateDisplay();
       }
     }
   }
 
   const equalEvent = (e) => {
     e.preventDefault()
-    if(operator === ""){
+    if(operators.length === 0){
       return;
     }
-    const operatorIndex = operationArray.indexOf(operator)
-    const leftNumbers = operationArray.slice(0, operatorIndex).join('')
-    const rightNumbers = operationArray.slice(operatorIndex + 1).join('')
-    if(operator === "x"){
-      display.innerText = Number(leftNumbers) * Number(rightNumbers);
+    operationArray = createEquationArray();
+
+    while(operators.includes("x")){
+      const index = operationArray.indexOf("x")
+      const multiply = operationArray.slice(index - 1, index + 2)
+      operationArray.splice(index - 1, 3, Number(multiply[0]) * Number(multiply[2]))
+      operators.splice(operators.indexOf("x"), 1)
     }
-    if(operator === "-"){
-      display.innerText = Number(leftNumbers) - Number(rightNumbers);
+    while(operators.includes("÷")){
+      const index = operationArray.indexOf("÷")
+      const multiply = operationArray.slice(index - 1, index + 2)
+      operationArray.splice(index - 1, 3, Number(multiply[0]) / Number(multiply[2]))
+      operators.splice(operators.indexOf("÷"), 1)
     }
-    if(operator === "÷"){
-      display.innerText = Number(leftNumbers) / Number(rightNumbers);
+    while(operators.includes("+")){
+      const index = operationArray.indexOf("+")
+      const multiply = operationArray.slice(index - 1, index + 2)
+      operationArray.splice(index - 1, 3, Number(multiply[0]) + Number(multiply[2]))
+      operators.splice(operators.indexOf("+"), 1)
     }
-    if(operator === "+"){
-      display.innerText = Number(leftNumbers) + Number(rightNumbers);
+    while(operators.includes("-")){
+      const index = operationArray.indexOf("-")
+      const multiply = operationArray.slice(index - 1, index + 2)
+      operationArray.splice(index - 1, 3, Number(multiply[0]) - Number(multiply[2]))
+      operators.splice(operators.indexOf("-"), 1)
     }
+
+    display.innerText = operationArray.join('')
     operationArray.length = 0
-    operationArray.concat(Array.from(display.innerText))
+    operationArray = operationArray.concat(Array.from(String(display.innerText)))
   }
 
   const clearEvent = (e) => {
     e.preventDefault()
     operationArray.length = 0
+    operators.length = 0
     display.innerText = "0"
   }
 
@@ -119,6 +108,17 @@ const main = () => {
     operationArray.forEach( item => {
       display.innerText += item
     })
+  }
+
+  const createEquationArray = () => {
+    let equationArr = []
+    operatorArr = [...operators]
+    operators.forEach(operator => {
+      const index = operationArray.indexOf(operatorArr.shift())
+      equationArr = equationArr.concat(operationArray.splice(0, index).join(''))
+      equationArr.push(operationArray.shift())
+    })
+    return equationArr = equationArr.concat(operationArray.join(''))
   }
 
   // Event Listeners
