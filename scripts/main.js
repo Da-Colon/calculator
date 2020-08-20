@@ -8,6 +8,8 @@ const main = () => {
   const deleteButton = document.querySelector('#del')
   const equalButton = document.querySelector('#equal')
   const squareRootButton = document.querySelector('#square-root')
+  const percentButton = document.querySelector('#percent')
+  const decimalButton = document.querySelector('#decimal')
 
   // Arrays
   let operationArray = []
@@ -81,10 +83,25 @@ const main = () => {
       operationArray.splice(index - 1, 3, Number(multiply[0]) - Number(multiply[2]))
       operators.splice(operators.indexOf("-"), 1)
     }
+    if(operationArray.length >= 16){
+      operationArray.length = 15
+    }
+      display.innerText = operationArray.join('')
+      operationArray.length = 0
+      operationArray = operationArray.concat(Array.from(String(display.innerText)))
+  }
 
-    display.innerText = operationArray.join('')
-    operationArray.length = 0
-    operationArray = operationArray.concat(Array.from(String(display.innerText)))
+  const percentEvent = (e) => {
+    e.preventDefault()
+    equalEvent(e);
+    display.innerText = String(Number(operationArray.join('') / 100))
+    operationArray = Array.from(display.innerText)
+  }
+
+  const decimalEvent = (e) => {
+    e.preventDefault()
+    operationArray.push(".")
+    updateDisplay();
   }
 
   const clearEvent = (e) => {
@@ -148,6 +165,14 @@ const main = () => {
 
   squareRootButton.addEventListener('click', (e) => {
     squareRootEvent(e)
+  })
+
+  percentButton.addEventListener('click', (e) => {
+    percentEvent(e)
+  })
+
+  decimalButton.addEventListener('click', (e) => {
+    decimalEvent(e)
   })
 }
 
